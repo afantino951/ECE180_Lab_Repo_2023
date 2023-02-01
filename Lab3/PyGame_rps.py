@@ -38,6 +38,8 @@ def rps_result(p1, p2):
         return 'CPU Wins'
     elif ((p1 == ROCK and p2 == SCISSORS) or (p1 == PAPER and p2 == ROCK) or (p1 == SCISSORS and p2 == PAPER)):
         return 'You Win!'
+    else:
+        return 'ERROR'
 
 # screen width and height
 SCREEN_WIDTH = 800
@@ -132,11 +134,12 @@ while running:
             
             CPU_input = str(random.randint(1,3))
 
-            # update text on the screen
-            text = font.render('You picked ' + convert(user_input), True, (140, 150, 100), (255,255,255))
-            cpu_text = large_font.render('CPU picked ' + convert(CPU_input) + ' ... ' + rps_result(user_input,CPU_input), True, (140, 150, 100), (255,255,255))
-            cpu_textRect = cpu_text.get_rect()
-            cpu_textRect.center = (SCREEN_WIDTH/2, (4*SCREEN_HEIGHT)/5)
+            if user_input != 0:
+                # update text on the screen
+                text = font.render('You picked ' + convert(user_input), True, (140, 150, 100), (255,255,255))
+                cpu_text = large_font.render('CPU picked ' + convert(CPU_input) + ' ... ' + rps_result(user_input,CPU_input), True, (140, 150, 100), (255,255,255))
+                cpu_textRect = cpu_text.get_rect()
+                cpu_textRect.center = (SCREEN_WIDTH/2, (4*SCREEN_HEIGHT)/5)
 
             print('\n\n')
             print("You picked ", convert(user_input), ' and the CPU picked ', convert(CPU_input))

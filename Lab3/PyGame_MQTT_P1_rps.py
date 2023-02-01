@@ -93,6 +93,8 @@ def rps_result(p1, p2):
         return 'Opponent Wins'
     elif ((p1 == ROCK and p2 == SCISSORS) or (p1 == PAPER and p2 == ROCK) or (p1 == SCISSORS and p2 == PAPER)):
         return 'You Win!'
+    else:
+        return 'ERROR'
 
 # screen width and height
 SCREEN_WIDTH = 800
@@ -165,7 +167,7 @@ running = True
 
 # game time to track when to prompt user for option again
 last_time = pygame.time.get_ticks()
-go_back_to_options_tick = 3000
+go_back_to_options_tick = 3000 # Make longer for screenshot
 
 # score to keep track score
 score = 0
@@ -216,10 +218,11 @@ while running:
         last_time = pygame.time.get_ticks()
 
         # update text on the screen
-        text = font.render('You picked ' + convert(user_input), True, (140, 150, 100), (255,255,255))
-        cpu_text = large_font.render('They picked ' + convert(player2_move) + ' ... ' + rps_result(user_input,player2_move), True, (140, 150, 100), (255,255,255))
-        cpu_textRect = cpu_text.get_rect()
-        cpu_textRect.center = (SCREEN_WIDTH/2, (4*SCREEN_HEIGHT)/5)
+        if user_input != 0:
+            text = font.render('You picked ' + convert(user_input), True, (140, 150, 100), (255,255,255))
+            cpu_text = large_font.render('They picked ' + convert(player2_move) + ' ... ' + rps_result(user_input,player2_move), True, (140, 150, 100), (255,255,255))
+            cpu_textRect = cpu_text.get_rect()
+            cpu_textRect.center = (SCREEN_WIDTH/2, (4*SCREEN_HEIGHT)/5)
 
         print('\n\n')
         print("You picked ", convert(user_input), ' and the they picked ', convert(player2_move))
@@ -230,8 +233,12 @@ while running:
 
         score_text = font.render('P1 Score: ' + str(score), True, (140, 150, 100), (255,255,255))
     elif (player1_received):
-        text = font.render('You picked ' + convert(user_input), True, (140, 150, 100), (255,255,255))
-        cpu_text = large_font.render('Waiting for opponent ... ', True, (140, 150, 100), (255,255,255))
+        if user_input == 0:
+            text = font.render('Error: invalid option', True, (140, 150, 100), (255,255,255))
+            cpu_text = large_font.render('Waiting for opponent ... ', True, (140, 150, 100), (255,255,255))
+        else: 
+            text = font.render('You picked ' + convert(user_input), True, (140, 150, 100), (255,255,255))
+            cpu_text = large_font.render('Waiting for opponent ... ', True, (140, 150, 100), (255,255,255))
         cpu_textRect = cpu_text.get_rect()
         cpu_textRect.center = (SCREEN_WIDTH/2, (4*SCREEN_HEIGHT)/5)
 
